@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiyaLife — Diyabet Yönetim Ekosistemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0FC7B2;
+    --teal-dim: #0a9e8d;
+    --teal-glow: rgba(15,199,178,0.18);
+    --midnight: #060d12;
+    --navy: #0c1a24;
+    --panel: #0f2230;
+    --panel2: #112638;
+    --text: #e8f2f7;
+    --muted: #6b9aaf;
+    --border: rgba(15,199,178,0.15);
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--midnight);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 6vw;
+    background: rgba(6,13,18,0.75);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown .7s ease both;
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -.02em;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .88rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-cta {
+    background: var(--teal);
+    color: var(--midnight) !important;
+    padding: 9px 22px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    color: var(--midnight) !important;
+    transition: opacity .2s !important;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 140px 6vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, rgba(15,199,178,.22) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(6,180,230,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 10% 60%, rgba(15,199,178,.08) 0%, transparent 60%);
+  }
+  /* animated grid */
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(15,199,178,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,199,178,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPan 40s linear infinite;
+  }
+  @keyframes gridPan { from { background-position: 0 0; } to { background-position: 60px 60px; } }
+
+  .hero-eyebrow {
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp .7s .3s ease both;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -.03em;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp .8s .45s ease both;
+  }
+  .hero-title .italic { font-style: italic; font-weight: 300; color: var(--teal); }
+  .hero-sub {
+    max-width: 620px;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp .8s .6s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    opacity: 0;
+    animation: fadeUp .8s .75s ease both;
+  }
+  .btn-primary {
+    background: var(--teal);
+    color: var(--midnight);
+    font-weight: 600;
+    padding: 14px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: .95rem;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(15,199,178,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(15,199,178,.5); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 14px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: .95rem;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-phones {
+    margin-top: 80px;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeUp 1s .9s ease both;
+  }
+  .phones-wrap {
+    display: flex; align-items: flex-end; justify-content: center; gap: 12px;
+  }
+  .phone-mock {
+    width: 155px;
+    height: 290px;
+    background: var(--panel);
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .phone-mock.center {
+    width: 175px; height: 330px;
+    transform: translateY(-20px);
+    box-shadow: 0 40px 80px rgba(0,0,0,.5), 0 0 50px rgba(15,199,178,.1);
+  }
+  .phone-screen {
+    position: absolute; inset: 10px;
+    background: var(--navy);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .ps-header {
+    background: var(--panel2);
+    padding: 10px 12px;
+    font-size: .55rem;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .ps-body { padding: 10px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .ps-card {
+    background: var(--panel);
+    border-radius: 10px;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+  }
+  .ps-card-label { font-size: .48rem; color: var(--muted); margin-bottom: 4px; }
+  .ps-card-val { font-family: 'Fraunces', serif; font-size: .9rem; color: var(--white); }
+  .ps-card-val span { color: var(--teal); font-size: .65rem; margin-left: 4px; }
+  .ps-badge {
+    display: inline-block;
+    background: rgba(15,199,178,.15);
+    color: var(--teal);
+    border-radius: 100px;
+    font-size: .44rem;
+    padding: 3px 8px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    margin-top: 5px;
+  }
+  .ps-list { display: flex; flex-direction: column; gap: 5px; }
+  .ps-list-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: .5rem; color: var(--muted);
+  }
+  .ps-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .ps-map {
+    flex: 1;
+    background: linear-gradient(135deg, var(--panel) 0%, rgba(15,199,178,.08) 100%);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .5rem; color: var(--muted);
+    position: relative; overflow: hidden;
+  }
+  .ps-map::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(15,199,178,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,199,178,.07) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .ps-pin {
+    position: relative; z-index: 1;
+    width: 10px; height: 10px;
+    background: var(--teal);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--teal);
+  }
+  .glow-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: .6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* ── STATS ── */
+  .stats {
+    padding: 60px 6vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-item {
+    background: var(--midnight);
+    padding: 40px 48px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--white);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .stat-num em { color: var(--teal); font-style: normal; }
+  .stat-label { font-size: .82rem; color: var(--muted); line-height: 1.4; }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 6vw; }
+  .section-eyebrow {
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 580px;
+  }
+
+  /* ── MODULES GRID ── */
+  .modules { background: var(--navy); }
+  .modules-intro { max-width: 640px; margin-bottom: 64px; }
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .mod-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    cursor: default;
+    transition: border-color .3s, transform .3s, box-shadow .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .mod-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(15,199,178,.08) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  .mod-card:hover::before { opacity: 1; }
+  .mod-card:hover { border-color: rgba(15,199,178,.4); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.3); }
+  .mod-icon {
+    width: 46px; height: 46px;
+    background: var(--teal-glow);
+    border: 1px solid rgba(15,199,178,.25);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  .mod-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+  .mod-desc { font-size: .86rem; line-height: 1.65; color: var(--muted); }
+  .mod-tag {
+    display: inline-block;
+    margin-top: 16px;
+    background: rgba(15,199,178,.1);
+    color: var(--teal);
+    font-size: .72rem;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+
+  /* ── HIGHLIGHT FEATURE ── */
+  .feature-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .feature-split.reverse { direction: rtl; }
+  .feature-split.reverse > * { direction: ltr; }
+  .feature-visual {
+    position: relative;
+  }
+  .feature-card-big {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card-big::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(15,199,178,.2) 0%, transparent 70%);
+  }
+  .fcb-label { font-size: .75rem; color: var(--muted); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+  .fcb-value {
+    font-family: 'Fraunces', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .fcb-value span { color: var(--teal); }
+  .fcb-sub { font-size: .82rem; color: var(--muted); margin-bottom: 28px; }
+  .fcb-bar-wrap { margin-bottom: 10px; }
+  .fcb-bar-label { display: flex; justify-content: space-between; font-size: .75rem; color: var(--muted); margin-bottom: 6px; }
+  .fcb-bar-track {
+    height: 6px; background: rgba(255,255,255,.06); border-radius: 100px; overflow: hidden;
+  }
+  .fcb-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--teal-dim), var(--teal));
+    border-radius: 100px;
+    animation: barGrow 1.5s 1s ease both;
+    transform-origin: left;
+  }
+  @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .floating-badge {
+    position: absolute;
+    bottom: -18px; left: 30px;
+    background: var(--teal);
+    color: var(--midnight);
+    font-size: .75rem;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 100px;
+    box-shadow: 0 8px 24px rgba(15,199,178,.4);
+    white-space: nowrap;
+  }
+
+  /* ── VALUES ── */
+  .values-bg { background: var(--midnight); }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .val-card {
+    padding: 36px 32px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--panel), var(--navy));
+    transition: transform .3s, border-color .3s;
+  }
+  .val-card:hover { transform: translateY(-5px); border-color: rgba(15,199,178,.35); }
+  .val-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: rgba(15,199,178,.2);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .val-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 10px; }
+  .val-text { font-size: .87rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── TIMELINE / PHASES ── */
+  .phases-bg { background: var(--navy); }
+  .timeline { margin-top: 64px; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+  }
+  .phase {
+    display: flex; gap: 40px;
+    padding: 0 0 56px 72px;
+    position: relative;
+  }
+  .phase::before {
+    content: '';
+    position: absolute;
+    left: 18px; top: 4px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 16px rgba(15,199,178,.5);
+  }
+  .phase-num {
+    font-family: 'Fraunces', serif;
+    font-size: .8rem;
+    color: var(--teal);
+    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: .05em;
+    min-width: 100px;
+    padding-top: 2px;
+  }
+  .phase-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+  .phase-text { font-size: .87rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── METRICS TABLE ── */
+  .metrics-bg { background: var(--midnight); }
+  .metrics-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .metric-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: border-color .3s;
+  }
+  .metric-card:hover { border-color: rgba(15,199,178,.4); }
+  .metric-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .metric-val {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+  .metric-label { font-size: .8rem; color: var(--muted); line-height: 1.4; }
+
+  /* ── QUOTE / HERO QUOTE ── */
+  .quote-section {
+    background: var(--navy);
+    text-align: center;
+    padding: 120px 6vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(15,199,178,.1) 0%, transparent 70%);
+  }
+  .quote-text {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--white);
+    max-width: 820px;
+    margin: 0 auto 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-author { font-size: .85rem; color: var(--teal); letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--midnight);
+    border-top: 1px solid var(--border);
+    padding: 60px 6vw 40px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; }
+  .footer-logo span { color: var(--teal); }
+  .footer-note { font-size: .8rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: .82rem; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    .feature-split { grid-template-columns: 1fr; gap: 40px; }
+    .feature-split.reverse { direction: ltr; }
+    .nav-links { display: none; }
+    .timeline::before { left: 16px; }
+    .phase { padding-left: 50px; }
+    .phase::before { left: 7px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Diya<span>Life</span></div>
+  <ul class="nav-links">
+    <li><a href="#modules">Modüller</a></li>
+    <li><a href="#values">Değerler</a></li>
+    <li><a href="#phases">Uygulama</a></li>
+    <li><a href="#metrics">Etki</a></li>
+    <li><a href="#contact" class="nav-cta">Keşfet</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <p class="hero-eyebrow">Sosyalfest 2026 — Sağlıklı Yaşam</p>
+  <h1 class="hero-title">
+    Diyabeti<br><span class="italic">yönet</span>, hayatı<br>yaşa.
+  </h1>
+  <p class="hero-sub">
+    DiyaLife; Tip 1 diyabetli gençlerin fiziksel, zihinsel ve sosyal sağlığını bütüncül bir perspektifle ele alan, teknoloji destekli ve akran öğrenimine dayalı yenilikçi bir diyabet yönetim ekosistemidir.
+  </p>
+  <div class="hero-btns">
+    <a href="#modules" class="btn-primary">Ekosistemi Keşfet</a>
+    <a href="#values" class="btn-outline">Özgün Değer</a>
+  </div>
+  <div class="hero-phones">
+    <div class="phones-wrap">
+      <!-- Phone 1: Community -->
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="ps-header">DiyaForum</div>
+          <div class="ps-body">
+            <div class="ps-card">
+              <div class="ps-card-label">Günlük Yaşam</div>
+              <div style="font-size:.5rem;color:var(--text);line-height:1.5;">Libre 3 sensör deneyimim — kalibrasyon süresi beklediğimden çok kısaldı...</div>
+              <div class="ps-badge">↑ 42 yorum 15</div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Egzersiz & Spor</div>
+              <div style="font-size:.5rem;color:var(--text);line-height:1.5;">Düşük karbonhidratlı kahvaltı önerileri?</div>
+              <div class="ps-badge">↑ 18 yorum 7</div>
+            </div>
+            <div class="ps-list">
+              <div class="ps-list-item"><div class="ps-dot"></div> Psikolojik Destek</div>
+              <div class="ps-list-item"><div class="ps-dot"></div> Okul Hayatı</div>
+              <div class="ps-list-item"><div class="ps-dot"></div> Teknoloji & CGM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phone 2: Dashboard (center) -->
+      <div class="phone-mock center">
+        <div class="phone-screen">
+          <div class="ps-header">DiyaLife — Ana Ekran</div>
+          <div class="ps-body">
+            <div class="ps-card">
+              <div class="ps-card-label">Kan Şekeri</div>
+              <div class="ps-card-val">5.8 <span>mmol/L ↗</span></div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Son İnsülin</div>
+              <div class="ps-card-val">3.5 <span>ü · 2sa önce</span></div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Günlük Adım</div>
+              <div class="ps-card-val">7,240 <span>/ 10K</span></div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">HbA1c Tahmini</div>
+              <div class="ps-card-val">6.9<span>%</span></div>
+              <div style="margin-top:6px;height:4px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;">
+                <div style="width:70%;height:100%;background:linear-gradient(90deg,#0a9e8d,#0FC7B2);border-radius:4px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phone 3: Map -->
+      <div class="phone-mock">
+        <div class="phone-screen">
+          <div class="ps-header">DiyaHarita</div>
+          <div class="ps-body">
+            <div class="ps-map">
+              <div class="ps-pin">
+                <div class="glow-dot" style="width:18px;height:18px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.2;"></div>
+              </div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Fit Kitchen</div>
+              <div style="font-size:.5rem;color:var(--muted);">Düşük KH — ★4.8 (24 puan)</div>
+            </div>
+            <div class="ps-card">
+              <div class="ps-card-label">Eczane — 0.3km</div>
+              <div style="font-size:.5rem;color:var(--teal);">İnsülin stoğu mevcut ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item reveal">
+    <span class="stat-num">12<em>+</em></span>
+    <span class="stat-label">Entegre modül ve alt sistem</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num"><em>%</em>50</span>
+    <span class="stat-label">Hedeflenen psikolojik iyilik artışı</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num"><em>%</em>30</span>
+    <span class="stat-label">Hipoglisemi sıklığı azalma hedefi</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num">3<em>il</em></span>
+    <span class="stat-label">Pilot uygulama şehri — İstanbul, Ankara, İzmir</span>
+  </div>
+</div>
+
+<!-- MODULES -->
+<section class="modules" id="modules">
+  <div class="modules-intro reveal">
+    <span class="section-eyebrow">Ekosistem</span>
+    <h2 class="section-title">12 bileşen,<br>tek bir ekosistem.</h2>
+    <p class="section-sub">Fiziksel sağlık, zihinsel destek ve sosyal bağlantı — her boyut tek bir çatı altında, birbirini tamamlayan modüller halinde tasarlandı.</p>
+  </div>
+  <div class="modules-grid" id="modules-grid">
+    <!-- cards injected by JS -->
+  </div>
+</section>
+
+<!-- FEATURE: DiyaAsistan -->
+<section style="background:var(--midnight);" id="values-feature">
+  <div class="feature-split reveal">
+    <div class="feature-content">
+      <span class="section-eyebrow">DiyaAsistan</span>
+      <h2 class="section-title">Ulusal kılavuza dayalı yapay zeka asistanı.</h2>
+      <p class="section-sub">Türkiye Endokrinoloji ve Metabolizma Derneği'nin klinik kılavuzu temel alınarak geliştirilen RAG mimarisine dayalı DiyaAsistan, her soruyu kaynak gösterimiyle yanıtlar. Tanı koymaz — yol gösterir.</p>
+      <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Kanıta dayalı, kaynak atıflı yanıtlar</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Acil semptomlarda HypoGuard ile entegre çalışır</p>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Kılavuz güncellemelerinde otomatik bilgi tabanı revizyonu</p>
+        </div>
+      </div>
+    </div>
+    <div class="feature-visual">
+      <div class="feature-card-big">
+        <div class="fcb-label">Asistan Yanıtı</div>
+        <div style="background:var(--navy);border-radius:12px;padding:16px;border:1px solid var(--border);margin-bottom:14px;">
+          <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px;">Sen sordun:</p>
+          <p style="font-size:.88rem;color:var(--white);">"Egzersiz öncesi insülin dozumu nasıl ayarlamalıyım?"</p>
+        </div>
+        <div style="background:rgba(15,199,178,.05);border-radius:12px;padding:16px;border:1px solid rgba(15,199,178,.2);">
+          <p style="font-size:.78rem;color:var(--teal);margin-bottom:8px;">DiyaAsistan:</p>
+          <p style="font-size:.85rem;color:var(--text);line-height:1.65;">Egzersiz süresi ve yoğunluğuna göre bazal insülini %20–50 azaltmanız önerilebilir. Orta yoğunluklu aktivite öncesi kan şekeriniz 120 mg/dL'nin üzerindeyse ek karbonhidrat gerekmeyebilir...</p>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);">📎 Kaynak: TEMD Diyabet Kılavuzu 2024, Bölüm 7.3</div>
+        </div>
+        <div class="floating-badge">✓ Kılavuz Onaylı</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE: Metrics -->
+<section style="background:var(--navy);padding:100px 6vw;" id="feature2">
+  <div class="feature-split reverse reveal">
+    <div class="feature-content">
+      <span class="section-eyebrow">Ölçülebilir Etki</span>
+      <h2 class="section-title">Her hedef,<br>somut bir çıktı.</h2>
+      <p class="section-sub">DiyaLife'ın başarısı soyut değil — HbA1c değerinden okul devamsızlığına, psikolojik iyilik puanından kullanıcı memnuniyetine kadar her gösterge net hedeflerle tanımlanmıştır.</p>
+    </div>
+    <div class="feature-visual">
+      <div class="feature-card-big">
+        <div class="fcb-label">Başarı Göstergeleri</div>
+        <div class="fcb-bar-wrap">
+          <div class="fcb-bar-label"><span>HbA1c İyileşme</span><span style="color:var(--teal)">%0.5–1.0 ↓</span></div>
+          <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="fcb-bar-wrap">
+          <div class="fcb-bar-label"><span>Hipoglisemi Sıklığı</span><span style="color:var(--teal)">%30 ↓</span></div>
+          <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:65%;animation-delay:1.2s"></div></div>
+        </div>
+        <div class="fcb-bar-wrap">
+          <div class="fcb-bar-label"><span>Psikolojik İyi Oluş</span><span style="color:var(--teal)">%50 ↑</span></div>
+          <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:85%;animation-delay:1.4s"></div></div>
+        </div>
+        <div class="fcb-bar-wrap">
+          <div class="fcb-bar-label"><span>Kullanıcı Memnuniyeti</span><span style="color:var(--teal)">4.5/5 ↑</span></div>
+          <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:90%;animation-delay:1.6s"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-bg" id="values">
+  <span class="section-eyebrow reveal">Özgün Değer</span>
+  <h2 class="section-title reveal">Neden farklıyız?</h2>
+  <p class="section-sub reveal">DiyaLife'ı sıradan bir sağlık uygulamasından ayıran beş temel tasarım ilkesi.</p>
+  <div class="values-grid" id="values-grid"></div>
+</section>
+
+<!-- PHASES -->
+<section class="phases-bg" id="phases">
+  <span class="section-eyebrow reveal">Uygulama Planı</span>
+  <h2 class="section-title reveal">Adım adım,<br>tüm Türkiye'ye.</h2>
+  <div class="timeline">
+    <div class="phase reveal">
+      <div class="phase-num">0–6. Ay</div>
+      <div>
+        <div class="phase-title">Pilot Başlangıç</div>
+        <div class="phase-text">5 pilot lisede okul entegrasyon programı başlatılır; mobil uygulamanın beta versiyonu yayımlanır. Hedef: 100 aktif kullanıcı. İstanbul, Ankara ve İzmir'den seçilen okullarla Türkiye Diyabet Vakfı iş birliği kurulur.</div>
+      </div>
+    </div>
+    <div class="phase reveal">
+      <div class="phase-num">6–12. Ay</div>
+      <div>
+        <div class="phase-title">Ölçeklendirme</div>
+        <div class="phase-text">20 liseye genişleme, Aile ve Arkadaş Modülü'nün devreye alınması. DiyaForum ve DiyaAkademi tam kapasite çalışmaya başlar. Hedef: 500 aktif kullanıcı.</div>
+      </div>
+    </div>
+    <div class="phase reveal">
+      <div class="phase-num">12. Ay +</div>
+      <div>
+        <div class="phase-title">Ulusal Yaygınlaşma</div>
+        <div class="phase-text">Tüm Türkiye'de erişim, Tip 2 diyabete model adaptasyonu, Sağlık Bakanlığı resmi programı statüsü. Uzun vadede WHO referans modeli hedefi.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics-bg" id="metrics">
+  <span class="section-eyebrow reveal">Beklenen Çıktılar</span>
+  <h2 class="section-title reveal">Üç düzeyde etki.</h2>
+  <div class="metrics-grid reveal" id="metrics-grid"></div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <p class="quote-text reveal">"Diyabet beni tanımlamaz;<br>ben diyabeti yönetirim."</p>
+  <p class="quote-author reveal">Efe Deniz Akmansoy — DiyaLife Tasarımcısı</p>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">Diya<span>Life</span></div>
+  <p class="footer-note">Sosyalfest 2026 — Sağlıklı Yaşam Sağlık Modeli Tasarım Yarışması</p>
+  <div class="footer-links">
+    <a href="#modules">Modüller</a>
+    <a href="#phases">Plan</a>
+    <a href="#metrics">Etki</a>
+  </div>
+</footer>
+
+<script>
+// Modules data
+const modules = [
+  { icon: '📱', name: 'Mobil Uygulama', desc: 'iOS ve Android için ücretsiz uygulama — akıllı insülin hesaplayıcı, HypoGuard ve aile modülüyle dört temel alt sistem.', tag: 'Platform' },
+  { icon: '🚨', name: 'HypoGuard', desc: 'Kullanıcıya özgü kan şekeri düşme örüntülerini öğrenen erken uyarı sistemi. Konum paylaşımlı acil bildirim.', tag: 'Güvenlik' },
+  { icon: '🏫', name: 'Okul Entegrasyonu', desc: 'Öğretmen eğitimi, sınıf farkındalık programı ve kantin uyum sistemiyle okulda güvenli bir ortam.', tag: 'Eğitim' },
+  { icon: '🧠', name: 'Psikolojik Destek', desc: 'Duygu durum takibi, burnout tespiti ve 7/24 online danışmanlık hattıyla ruh sağlığı öncelikli yaklaşım.', tag: 'Sağlık' },
+  { icon: '🏃', name: 'DiyaFit', desc: 'Egzersiz sırasındaki kan şekeri dalgalanmalarını yöneten spor asistanı ve gamification sistemi.', tag: 'Aktif Yaşam' },
+  { icon: '🌙', name: 'SleepGuard', desc: 'Gece hipoglisemisi riskine karşı uyku güvenlik sistemi. Otomatik aile bildirimi ve sabah özet raporu.', tag: 'Gece Güvenliği' },
+  { icon: '🥗', name: 'Diyetisyen Köşesi', desc: 'Düşük glisemik indeksli Türk mutfağına uyarlanmış tarifler ve oyunlaştırılmış porsiyon eğitimi.', tag: 'Beslenme' },
+  { icon: '🧘', name: 'Mindfulness', desc: 'İnsülin enjeksiyonu öncesi nefes egzersizleri, iğne fobisi protokolü ve stres-şeker ilişkisi eğitimi.', tag: 'Zihin' },
+  { icon: '⌚', name: 'Giyilebilir Entegrasyon', desc: 'Dexcom G7, FreeStyle Libre 3, Apple Watch, Samsung ve Fitbit ile gerçek zamanlı veri senkronizasyonu.', tag: 'Teknoloji' },
+  { icon: '💬', name: 'DiyaForum', desc: 'Reddit esinli demokratik topluluk platformu — moderasyon, rozet sistemi ve anonimlik seçeneğiyle.', tag: 'Topluluk' },
+  { icon: '🎓', name: 'DiyaAkademi', desc: 'Uzman onaylı eğitim videoları, canlı yayın etkinlikleri ve kişiselleştirilmiş öğrenme yolu.', tag: 'Eğitim' },
+  { icon: '🗺️', name: 'DiyaHarita', desc: 'Topluluk kaynaklı diyabet dostu mekan rehberi. DiyaLife Onaylı rozeti kazanan restoranlar, eczaneler, klinikler.', tag: 'Rehber' },
+];
+
+const valuesData = [
+  { num: '01', title: 'Normalleştirme', text: 'Diyabeti "acınılacak bir durum" değil, başarıyla yönetilebilen bir yaşam biçimi olarak konumlandırır. Damgalanma kültürünü ortadan kaldırır.' },
+  { num: '02', title: 'Görünmez Destek', text: 'Aile ve arkadaşların "sürekli uyarma" yerine "fark edilmeyen ama her zaman hazır" bir destek sunmasını esas alır.' },
+  { num: '03', title: 'Sosyal Çekinceyi Kırma', text: 'Okulda insülin enjeksiyonu veya kan şekeri ölçümü sırasında yaşanan utancı kapsamlı farkındalık eğitimleriyle ele alır.' },
+  { num: '04', title: 'Akran Öğrenimi', text: 'Aynı tanıyı taşıyan gençlerin birbirinden öğrenmesini ve karşılıklı motivasyonu merkeze alır. Yalnızlık hissini azaltır.' },
+  { num: '05', title: 'Teknoloji Destekli Özerklik', text: 'Yapay zeka destekli araçlar ve kişiselleştirilmiş önerilerle gençlerin kendi sağlıklarını bağımsız yönetmesini destekler.' },
+];
+
+const metricsData = [
+  { icon: '📉', val: '%0.5–1', label: 'HbA1c azalma hedefi' },
+  { icon: '⚡', val: '%30', label: 'Hipoglisemi sıklığı düşüşü' },
+  { icon: '🏫', val: '%40', label: 'Okul devamsızlığı azalması' },
+  { icon: '😊', val: '%50', label: 'Psikolojik iyilik artışı' },
+  { icon: '⭐', val: '4.5/5', label: 'Hedef kullanıcı memnuniyeti' },
+  { icon: '🌍', val: '81 il', label: 'Uzun vadeli kapsama hedefi' },
+];
+
+// Render modules
+const mgrid = document.getElementById('modules-grid');
+modules.forEach((m, i) => {
+  const el = document.createElement('div');
+  el.className = 'mod-card reveal';
+  el.style.transitionDelay = (i * 0.05) + 's';
+  el.innerHTML = `<div class="mod-icon">${m.icon}</div><div class="mod-name">${m.name}</div><div class="mod-desc">${m.desc}</div><span class="mod-tag">${m.tag}</span>`;
+  mgrid.appendChild(el);
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// Render values
+const vgrid = document.getElementById('values-grid');
+valuesData.forEach((v, i) => {
+  const el = document.createElement('div');
+  el.className = 'val-card reveal';
+  el.style.transitionDelay = (i * 0.08) + 's';
+  el.innerHTML = `<div class="val-num">${v.num}</div><div class="val-title">${v.title}</div><div class="val-text">${v.text}</div>`;
+  vgrid.appendChild(el);
+});
+
+// Render metrics
+const mgrid2 = document.getElementById('metrics-grid');
+metricsData.forEach((m, i) => {
+  const el = document.createElement('div');
+  el.className = 'metric-card reveal';
+  el.style.transitionDelay = (i * 0.07) + 's';
+  el.innerHTML = `<div class="metric-icon">${m.icon}</div><div class="metric-val">${m.val}</div><div class="metric-label">${m.label}</div>`;
+  mgrid2.appendChild(el);
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
