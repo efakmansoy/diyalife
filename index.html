@@ -189,6 +189,12 @@
     overflow: hidden;
     display: flex; flex-direction: column;
   }
+  .phone-shot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
   .ps-header {
     background: var(--panel2);
     padding: 10px 12px;
@@ -582,10 +588,39 @@
     .timeline::before { left: 16px; }
     .phase { padding-left: 50px; }
     .phase::before { left: 7px; }
+    .cursor-dot, .cursor-outline { display: none; } /* Hide custom cursor on mobile */
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 10px var(--teal);
+  }
+  .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(15,199,178,0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
   }
 </style>
 </head>
 <body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
 
 <!-- NAV -->
 <nav>
@@ -603,7 +638,7 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <p class="hero-eyebrow">Sosyalfest 2026 — Sağlıklı Yaşam</p>
+  <p class="hero-eyebrow">DiyaLife Dijital Sağlık Ekosistemi</p>
   <h1 class="hero-title">
     Diyabeti<br><span class="italic">yönet</span>, hayatı<br>yaşa.
   </h1>
@@ -616,75 +651,22 @@
   </div>
   <div class="hero-phones">
     <div class="phones-wrap">
-      <!-- Phone 1: Community -->
+      <!-- Phone 1 -->
       <div class="phone-mock">
         <div class="phone-screen">
-          <div class="ps-header">DiyaForum</div>
-          <div class="ps-body">
-            <div class="ps-card">
-              <div class="ps-card-label">Günlük Yaşam</div>
-              <div style="font-size:.5rem;color:var(--text);line-height:1.5;">Libre 3 sensör deneyimim — kalibrasyon süresi beklediğimden çok kısaldı...</div>
-              <div class="ps-badge">↑ 42 yorum 15</div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">Egzersiz & Spor</div>
-              <div style="font-size:.5rem;color:var(--text);line-height:1.5;">Düşük karbonhidratlı kahvaltı önerileri?</div>
-              <div class="ps-badge">↑ 18 yorum 7</div>
-            </div>
-            <div class="ps-list">
-              <div class="ps-list-item"><div class="ps-dot"></div> Psikolojik Destek</div>
-              <div class="ps-list-item"><div class="ps-dot"></div> Okul Hayatı</div>
-              <div class="ps-list-item"><div class="ps-dot"></div> Teknoloji & CGM</div>
-            </div>
-          </div>
+          <img src="photo_1_2026-03-29_21-30-26.jpg" alt="DiyaLife ekran görüntüsü 1" class="phone-shot">
         </div>
       </div>
-      <!-- Phone 2: Dashboard (center) -->
+      <!-- Phone 2 (center) -->
       <div class="phone-mock center">
         <div class="phone-screen">
-          <div class="ps-header">DiyaLife — Ana Ekran</div>
-          <div class="ps-body">
-            <div class="ps-card">
-              <div class="ps-card-label">Kan Şekeri</div>
-              <div class="ps-card-val">5.8 <span>mmol/L ↗</span></div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">Son İnsülin</div>
-              <div class="ps-card-val">3.5 <span>ü · 2sa önce</span></div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">Günlük Adım</div>
-              <div class="ps-card-val">7,240 <span>/ 10K</span></div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">HbA1c Tahmini</div>
-              <div class="ps-card-val">6.9<span>%</span></div>
-              <div style="margin-top:6px;height:4px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;">
-                <div style="width:70%;height:100%;background:linear-gradient(90deg,#0a9e8d,#0FC7B2);border-radius:4px;"></div>
-              </div>
-            </div>
-          </div>
+          <img src="photo_2_2026-03-29_21-30-26.jpg" alt="DiyaLife ekran görüntüsü 2" class="phone-shot">
         </div>
       </div>
-      <!-- Phone 3: Map -->
+      <!-- Phone 3 -->
       <div class="phone-mock">
         <div class="phone-screen">
-          <div class="ps-header">DiyaHarita</div>
-          <div class="ps-body">
-            <div class="ps-map">
-              <div class="ps-pin">
-                <div class="glow-dot" style="width:18px;height:18px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.2;"></div>
-              </div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">Fit Kitchen</div>
-              <div style="font-size:.5rem;color:var(--muted);">Düşük KH — ★4.8 (24 puan)</div>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-label">Eczane — 0.3km</div>
-              <div style="font-size:.5rem;color:var(--teal);">İnsülin stoğu mevcut ✓</div>
-            </div>
-          </div>
+          <img src="photo_3_2026-03-29_21-30-26.jpg" alt="DiyaLife ekran görüntüsü 3" class="phone-shot">
         </div>
       </div>
     </div>
@@ -848,7 +830,7 @@
 <!-- FOOTER -->
 <footer id="contact">
   <div class="footer-logo">Diya<span>Life</span></div>
-  <p class="footer-note">Sosyalfest 2026 — Sağlıklı Yaşam Sağlık Modeli Tasarım Yarışması</p>
+  <p class="footer-note">DiyaLife — Diyabet yönetiminde bütüncül dijital destek platformu</p>
   <div class="footer-links">
     <a href="#modules">Modüller</a>
     <a href="#phases">Plan</a>
@@ -930,6 +912,36 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Custom Cursor Animation
+const cursorDot = document.getElementById('cursor-dot');
+const cursorOutline = document.getElementById('cursor-outline');
+
+if (window.matchMedia("(pointer: fine)").matches) {
+  window.addEventListener('mousemove', (e) => {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+
+    cursorOutline.animate({
+      left: e.clientX + 'px',
+      top: e.clientY + 'px'
+    }, { duration: 500, fill: 'forwards' });
+  });
+
+  // Adding hover effect for clickable elements
+  document.querySelectorAll('a, button, .mod-card, .val-card, .metric-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorOutline.style.width = '60px';
+      cursorOutline.style.height = '60px';
+      cursorOutline.style.backgroundColor = 'rgba(15,199,178,0.1)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorOutline.style.width = '36px';
+      cursorOutline.style.height = '36px';
+      cursorOutline.style.backgroundColor = 'transparent';
+    });
+  });
+}
 </script>
 </body>
 </html>
