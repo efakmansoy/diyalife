@@ -614,6 +614,20 @@
     z-index: 9998;
     transition: width 0.2s, height 0.2s, background-color 0.2s;
   }
+
+  /* ── LANG SWITCHER ── */
+  .lang-switch {
+    display: flex; gap: 8px; margin-left: 20px; align-items: center; border-left: 1px solid var(--border); padding-left: 20px;
+  }
+  .lang-switch button {
+    background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: .85rem; font-weight: 600; font-family: 'DM Sans', sans-serif; transition: color .2s;
+  }
+  .lang-switch button.active { color: var(--teal); }
+  .lang-switch button:hover { color: var(--white); }
+
+  @media (max-width: 800px) {
+    .lang-switch { border-left: none; padding-left: 0; margin-left: 0; position: absolute; right: 6vw; top: 20px; }
+  }
 </style>
 </head>
 <body>
@@ -626,28 +640,32 @@
 <nav>
   <div class="nav-logo">Diya<span>Life</span></div>
   <ul class="nav-links">
-    <li><a href="#modules">Modüller</a></li>
-    <li><a href="#values">Değerler</a></li>
-    <li><a href="#phases">Uygulama</a></li>
-    <li><a href="#metrics">Etki</a></li>
-    <li><a href="#contact" class="nav-cta">Keşfet</a></li>
+    <li><a href="#modules" data-i18n="nav_modules">Modüller</a></li>
+    <li><a href="#values" data-i18n="nav_values">Değerler</a></li>
+    <li><a href="#phases" data-i18n="nav_phases">Uygulama</a></li>
+    <li><a href="#metrics" data-i18n="nav_metrics">Etki</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav_explore">Keşfet</a></li>
   </ul>
+  <div class="lang-switch">
+    <button id="btn-tr" class="active" onclick="setLang('tr')">TR</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <p class="hero-eyebrow">DiyaLife Dijital Sağlık Ekosistemi</p>
-  <h1 class="hero-title">
+  <p class="hero-eyebrow" data-i18n="hero_eyebrow">DiyaLife Dijital Sağlık Ekosistemi</p>
+  <h1 class="hero-title" data-i18n="hero_title">
     Diyabeti<br><span class="italic">yönet</span>, hayatı<br>yaşa.
   </h1>
-  <p class="hero-sub">
+  <p class="hero-sub" data-i18n="hero_sub">
     DiyaLife; Tip 1 diyabetli gençlerin fiziksel, zihinsel ve sosyal sağlığını bütüncül bir perspektifle ele alan, teknoloji destekli ve akran öğrenimine dayalı yenilikçi bir diyabet yönetim ekosistemidir.
   </p>
   <div class="hero-btns">
-    <a href="#modules" class="btn-primary">Ekosistemi Keşfet</a>
-    <a href="#values" class="btn-outline">Özgün Değer</a>
+    <a href="#modules" class="btn-primary" data-i18n="hero_btn_explore">Ekosistemi Keşfet</a>
+    <a href="#values" class="btn-outline" data-i18n="hero_btn_values">Özgün Değer</a>
   </div>
   <div class="hero-phones">
     <div class="phones-wrap">
@@ -677,28 +695,28 @@
 <div class="stats">
   <div class="stat-item reveal">
     <span class="stat-num">12<em>+</em></span>
-    <span class="stat-label">Entegre modül ve alt sistem</span>
+    <span class="stat-label" data-i18n="stat_1">Entegre modül ve alt sistem</span>
   </div>
   <div class="stat-item reveal">
     <span class="stat-num"><em>%</em>50</span>
-    <span class="stat-label">Hedeflenen psikolojik iyilik artışı</span>
+    <span class="stat-label" data-i18n="stat_2">Hedeflenen psikolojik iyilik artışı</span>
   </div>
   <div class="stat-item reveal">
     <span class="stat-num"><em>%</em>30</span>
-    <span class="stat-label">Hipoglisemi sıklığı azalma hedefi</span>
+    <span class="stat-label" data-i18n="stat_3">Hipoglisemi sıklığı azalma hedefi</span>
   </div>
   <div class="stat-item reveal">
     <span class="stat-num">3<em>il</em></span>
-    <span class="stat-label">Pilot uygulama şehri — İstanbul, Ankara, İzmir</span>
+    <span class="stat-label" data-i18n="stat_4">Pilot uygulama şehri — İstanbul, Ankara, İzmir</span>
   </div>
 </div>
 
 <!-- MODULES -->
 <section class="modules" id="modules">
   <div class="modules-intro reveal">
-    <span class="section-eyebrow">Ekosistem</span>
-    <h2 class="section-title">12 bileşen,<br>tek bir ekosistem.</h2>
-    <p class="section-sub">Fiziksel sağlık, zihinsel destek ve sosyal bağlantı — her boyut tek bir çatı altında, birbirini tamamlayan modüller halinde tasarlandı.</p>
+    <span class="section-eyebrow" data-i18n="mod_eyebrow">Ekosistem</span>
+    <h2 class="section-title" data-i18n="mod_title">12 bileşen,<br>tek bir ekosistem.</h2>
+    <p class="section-sub" data-i18n="mod_sub">Fiziksel sağlık, zihinsel destek ve sosyal bağlantı — her boyut tek bir çatı altında, birbirini tamamlayan modüller halinde tasarlandı.</p>
   </div>
   <div class="modules-grid" id="modules-grid">
     <!-- cards injected by JS -->
@@ -709,37 +727,37 @@
 <section style="background:var(--midnight);" id="values-feature">
   <div class="feature-split reveal">
     <div class="feature-content">
-      <span class="section-eyebrow">DiyaAsistan</span>
-      <h2 class="section-title">Ulusal kılavuza dayalı yapay zeka asistanı.</h2>
-      <p class="section-sub">Türkiye Endokrinoloji ve Metabolizma Derneği'nin klinik kılavuzu temel alınarak geliştirilen RAG mimarisine dayalı DiyaAsistan, her soruyu kaynak gösterimiyle yanıtlar. Tanı koymaz — yol gösterir.</p>
+      <span class="section-eyebrow" data-i18n="feat1_eyebrow">DiyaAsistan</span>
+      <h2 class="section-title" data-i18n="feat1_title">Ulusal kılavuza dayalı yapay zeka asistanı.</h2>
+      <p class="section-sub" data-i18n="feat1_sub">Türkiye Endokrinoloji ve Metabolizma Derneği'nin klinik kılavuzu temel alınarak geliştirilen RAG mimarisine dayalı DiyaAsistan, her soruyu kaynak gösterimiyle yanıtlar. Tanı koymaz — yol gösterir.</p>
       <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:flex-start;gap:14px;">
           <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
-          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Kanıta dayalı, kaynak atıflı yanıtlar</p>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;" data-i18n="feat1_l1">Kanıta dayalı, kaynak atıflı yanıtlar</p>
         </div>
         <div style="display:flex;align-items:flex-start;gap:14px;">
           <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
-          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Acil semptomlarda HypoGuard ile entegre çalışır</p>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;" data-i18n="feat1_l2">Acil semptomlarda HypoGuard ile entegre çalışır</p>
         </div>
         <div style="display:flex;align-items:flex-start;gap:14px;">
           <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0;"></div>
-          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;">Kılavuz güncellemelerinde otomatik bilgi tabanı revizyonu</p>
+          <p style="font-size:.9rem;color:var(--muted);line-height:1.6;" data-i18n="feat1_l3">Kılavuz güncellemelerinde otomatik bilgi tabanı revizyonu</p>
         </div>
       </div>
     </div>
     <div class="feature-visual">
       <div class="feature-card-big">
-        <div class="fcb-label">Asistan Yanıtı</div>
+        <div class="fcb-label" data-i18n="feat1_card1">Asistan Yanıtı</div>
         <div style="background:var(--navy);border-radius:12px;padding:16px;border:1px solid var(--border);margin-bottom:14px;">
-          <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px;">Sen sordun:</p>
-          <p style="font-size:.88rem;color:var(--white);">"Egzersiz öncesi insülin dozumu nasıl ayarlamalıyım?"</p>
+          <p style="font-size:.78rem;color:var(--muted);margin-bottom:8px;" data-i18n="feat1_q1">Sen sordun:</p>
+          <p style="font-size:.88rem;color:var(--white);" data-i18n="feat1_q2">"Egzersiz öncesi insülin dozumu nasıl ayarlamalıyım?"</p>
         </div>
         <div style="background:rgba(15,199,178,.05);border-radius:12px;padding:16px;border:1px solid rgba(15,199,178,.2);">
           <p style="font-size:.78rem;color:var(--teal);margin-bottom:8px;">DiyaAsistan:</p>
-          <p style="font-size:.85rem;color:var(--text);line-height:1.65;">Egzersiz süresi ve yoğunluğuna göre bazal insülini %20–50 azaltmanız önerilebilir. Orta yoğunluklu aktivite öncesi kan şekeriniz 120 mg/dL'nin üzerindeyse ek karbonhidrat gerekmeyebilir...</p>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);">📎 Kaynak: TEMD Diyabet Kılavuzu 2024, Bölüm 7.3</div>
+          <p style="font-size:.85rem;color:var(--text);line-height:1.65;" data-i18n="feat1_ans1">Egzersiz süresi ve yoğunluğuna göre bazal insülini %20–50 azaltmanız önerilebilir. Orta yoğunluklu aktivite öncesi kan şekeriniz 120 mg/dL'nin üzerindeyse ek karbonhidrat gerekmeyebilir...</p>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:.7rem;color:var(--muted);" data-i18n="feat1_src">📎 Kaynak: TEMD Diyabet Kılavuzu 2024, Bölüm 7.3</div>
         </div>
-        <div class="floating-badge">✓ Kılavuz Onaylı</div>
+        <div class="floating-badge" data-i18n="feat1_badge">✓ Kılavuz Onaylı</div>
       </div>
     </div>
   </div>
@@ -749,27 +767,27 @@
 <section style="background:var(--navy);padding:100px 6vw;" id="feature2">
   <div class="feature-split reverse reveal">
     <div class="feature-content">
-      <span class="section-eyebrow">Ölçülebilir Etki</span>
-      <h2 class="section-title">Her hedef,<br>somut bir çıktı.</h2>
-      <p class="section-sub">DiyaLife'ın başarısı soyut değil — HbA1c değerinden okul devamsızlığına, psikolojik iyilik puanından kullanıcı memnuniyetine kadar her gösterge net hedeflerle tanımlanmıştır.</p>
+      <span class="section-eyebrow" data-i18n="feat2_eyebrow">Ölçülebilir Etki</span>
+      <h2 class="section-title" data-i18n="feat2_title">Her hedef,<br>somut bir çıktı.</h2>
+      <p class="section-sub" data-i18n="feat2_sub">DiyaLife'ın başarısı soyut değil — HbA1c değerinden okul devamsızlığına, psikolojik iyilik puanından kullanıcı memnuniyetine kadar her gösterge net hedeflerle tanımlanmıştır.</p>
     </div>
     <div class="feature-visual">
       <div class="feature-card-big">
-        <div class="fcb-label">Başarı Göstergeleri</div>
+        <div class="fcb-label" data-i18n="feat2_card1">Başarı Göstergeleri</div>
         <div class="fcb-bar-wrap">
-          <div class="fcb-bar-label"><span>HbA1c İyileşme</span><span style="color:var(--teal)">%0.5–1.0 ↓</span></div>
+          <div class="fcb-bar-label"><span data-i18n="feat2_b1">HbA1c İyileşme</span><span style="color:var(--teal)">%0.5–1.0 ↓</span></div>
           <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:75%"></div></div>
         </div>
         <div class="fcb-bar-wrap">
-          <div class="fcb-bar-label"><span>Hipoglisemi Sıklığı</span><span style="color:var(--teal)">%30 ↓</span></div>
+          <div class="fcb-bar-label"><span data-i18n="feat2_b2">Hipoglisemi Sıklığı</span><span style="color:var(--teal)">%30 ↓</span></div>
           <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:65%;animation-delay:1.2s"></div></div>
         </div>
         <div class="fcb-bar-wrap">
-          <div class="fcb-bar-label"><span>Psikolojik İyi Oluş</span><span style="color:var(--teal)">%50 ↑</span></div>
+          <div class="fcb-bar-label"><span data-i18n="feat2_b3">Psikolojik İyi Oluş</span><span style="color:var(--teal)">%50 ↑</span></div>
           <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:85%;animation-delay:1.4s"></div></div>
         </div>
         <div class="fcb-bar-wrap">
-          <div class="fcb-bar-label"><span>Kullanıcı Memnuniyeti</span><span style="color:var(--teal)">4.5/5 ↑</span></div>
+          <div class="fcb-bar-label"><span data-i18n="feat2_b4">Kullanıcı Memnuniyeti</span><span style="color:var(--teal)">4.5/5 ↑</span></div>
           <div class="fcb-bar-track"><div class="fcb-bar-fill" style="width:90%;animation-delay:1.6s"></div></div>
         </div>
       </div>
@@ -779,36 +797,36 @@
 
 <!-- VALUES -->
 <section class="values-bg" id="values">
-  <span class="section-eyebrow reveal">Özgün Değer</span>
-  <h2 class="section-title reveal">Neden farklıyız?</h2>
-  <p class="section-sub reveal">DiyaLife'ı sıradan bir sağlık uygulamasından ayıran beş temel tasarım ilkesi.</p>
+  <span class="section-eyebrow reveal" data-i18n="val_e">Özgün Değer</span>
+  <h2 class="section-title reveal" data-i18n="val_t">Neden farklıyız?</h2>
+  <p class="section-sub reveal" data-i18n="val_s">DiyaLife'ı sıradan bir sağlık uygulamasından ayıran beş temel tasarım ilkesi.</p>
   <div class="values-grid" id="values-grid"></div>
 </section>
 
 <!-- PHASES -->
 <section class="phases-bg" id="phases">
-  <span class="section-eyebrow reveal">Uygulama Planı</span>
-  <h2 class="section-title reveal">Adım adım,<br>tüm Türkiye'ye.</h2>
+  <span class="section-eyebrow reveal" data-i18n="pha_e">Uygulama Planı</span>
+  <h2 class="section-title reveal" data-i18n="pha_t">Adım adım,<br>tüm Türkiye'ye.</h2>
   <div class="timeline">
     <div class="phase reveal">
-      <div class="phase-num">0–6. Ay</div>
+      <div class="phase-num" data-i18n="pha_n1">0–6. Ay</div>
       <div>
-        <div class="phase-title">Pilot Başlangıç</div>
-        <div class="phase-text">5 pilot lisede okul entegrasyon programı başlatılır; mobil uygulamanın beta versiyonu yayımlanır. Hedef: 100 aktif kullanıcı. İstanbul, Ankara ve İzmir'den seçilen okullarla Türkiye Diyabet Vakfı iş birliği kurulur.</div>
+        <div class="phase-title" data-i18n="pha_i1">Pilot Başlangıç</div>
+        <div class="phase-text" data-i18n="pha_p1">5 pilot lisede okul entegrasyon programı başlatılır; mobil uygulamanın beta versiyonu yayımlanır. Hedef: 100 aktif kullanıcı. İstanbul, Ankara ve İzmir'den seçilen okullarla Türkiye Diyabet Vakfı iş birliği kurulur.</div>
       </div>
     </div>
     <div class="phase reveal">
-      <div class="phase-num">6–12. Ay</div>
+      <div class="phase-num" data-i18n="pha_n2">6–12. Ay</div>
       <div>
-        <div class="phase-title">Ölçeklendirme</div>
-        <div class="phase-text">20 liseye genişleme, Aile ve Arkadaş Modülü'nün devreye alınması. DiyaForum ve DiyaAkademi tam kapasite çalışmaya başlar. Hedef: 500 aktif kullanıcı.</div>
+        <div class="phase-title" data-i18n="pha_i2">Ölçeklendirme</div>
+        <div class="phase-text" data-i18n="pha_p2">20 liseye genişleme, Aile ve Arkadaş Modülü'nün devreye alınması. DiyaForum ve DiyaAkademi tam kapasite çalışmaya başlar. Hedef: 500 aktif kullanıcı.</div>
       </div>
     </div>
     <div class="phase reveal">
-      <div class="phase-num">12. Ay +</div>
+      <div class="phase-num" data-i18n="pha_n3">12. Ay +</div>
       <div>
-        <div class="phase-title">Ulusal Yaygınlaşma</div>
-        <div class="phase-text">Tüm Türkiye'de erişim, Tip 2 diyabete model adaptasyonu, Sağlık Bakanlığı resmi programı statüsü. Uzun vadede WHO referans modeli hedefi.</div>
+        <div class="phase-title" data-i18n="pha_i3">Ulusal Yaygınlaşma</div>
+        <div class="phase-text" data-i18n="pha_p3">Tüm Türkiye'de erişim, Tip 2 diyabete model adaptasyonu, Sağlık Bakanlığı resmi programı statüsü. Uzun vadede WHO referans modeli hedefi.</div>
       </div>
     </div>
   </div>
@@ -816,96 +834,208 @@
 
 <!-- METRICS -->
 <section class="metrics-bg" id="metrics">
-  <span class="section-eyebrow reveal">Beklenen Çıktılar</span>
-  <h2 class="section-title reveal">Üç düzeyde etki.</h2>
+  <span class="section-eyebrow reveal" data-i18n="met_e">Beklenen Çıktılar</span>
+  <h2 class="section-title reveal" data-i18n="met_t">Üç düzeyde etki.</h2>
   <div class="metrics-grid reveal" id="metrics-grid"></div>
 </section>
 
 <!-- QUOTE -->
 <div class="quote-section">
-  <p class="quote-text reveal">"Diyabet beni tanımlamaz;<br>ben diyabeti yönetirim."</p>
-  <p class="quote-author reveal">Efe Deniz Akmansoy — DiyaLife Tasarımcısı</p>
+  <p class="quote-text reveal" data-i18n="quo_t">"Diyabet beni tanımlamaz;<br>ben diyabeti yönetirim."</p>
+  <p class="quote-author reveal" data-i18n="quo_a">Efe Deniz Akmansoy</p>
 </div>
 
 <!-- FOOTER -->
 <footer id="contact">
   <div class="footer-logo">Diya<span>Life</span></div>
-  <p class="footer-note">DiyaLife — Diyabet yönetiminde bütüncül dijital destek platformu</p>
+  <p class="footer-note" data-i18n="foo_d">DiyaLife — Diyabet yönetiminde bütüncül dijital destek platformu</p>
   <div class="footer-links">
-    <a href="#modules">Modüller</a>
-    <a href="#phases">Plan</a>
-    <a href="#metrics">Etki</a>
+    <a href="#modules" data-i18n="nav_modules">Modüller</a>
+    <a href="#phases" data-i18n="nav_phases">Plan</a>
+    <a href="#metrics" data-i18n="nav_metrics">Etki</a>
   </div>
 </footer>
 
 <script>
-// Modules data
-const modules = [
-  { icon: '📱', name: 'Mobil Uygulama', desc: 'iOS ve Android için ücretsiz uygulama — akıllı insülin hesaplayıcı, HypoGuard ve aile modülüyle dört temel alt sistem.', tag: 'Platform' },
-  { icon: '🚨', name: 'HypoGuard', desc: 'Kullanıcıya özgü kan şekeri düşme örüntülerini öğrenen erken uyarı sistemi. Konum paylaşımlı acil bildirim.', tag: 'Güvenlik' },
-  { icon: '🏫', name: 'Okul Entegrasyonu', desc: 'Öğretmen eğitimi, sınıf farkındalık programı ve kantin uyum sistemiyle okulda güvenli bir ortam.', tag: 'Eğitim' },
-  { icon: '🧠', name: 'Psikolojik Destek', desc: 'Duygu durum takibi, burnout tespiti ve 7/24 online danışmanlık hattıyla ruh sağlığı öncelikli yaklaşım.', tag: 'Sağlık' },
-  { icon: '🏃', name: 'DiyaFit', desc: 'Egzersiz sırasındaki kan şekeri dalgalanmalarını yöneten spor asistanı ve gamification sistemi.', tag: 'Aktif Yaşam' },
-  { icon: '🌙', name: 'SleepGuard', desc: 'Gece hipoglisemisi riskine karşı uyku güvenlik sistemi. Otomatik aile bildirimi ve sabah özet raporu.', tag: 'Gece Güvenliği' },
-  { icon: '🥗', name: 'Diyetisyen Köşesi', desc: 'Düşük glisemik indeksli Türk mutfağına uyarlanmış tarifler ve oyunlaştırılmış porsiyon eğitimi.', tag: 'Beslenme' },
-  { icon: '🧘', name: 'Mindfulness', desc: 'İnsülin enjeksiyonu öncesi nefes egzersizleri, iğne fobisi protokolü ve stres-şeker ilişkisi eğitimi.', tag: 'Zihin' },
-  { icon: '⌚', name: 'Giyilebilir Entegrasyon', desc: 'Dexcom G7, FreeStyle Libre 3, Apple Watch, Samsung ve Fitbit ile gerçek zamanlı veri senkronizasyonu.', tag: 'Teknoloji' },
-  { icon: '💬', name: 'DiyaForum', desc: 'Reddit esinli demokratik topluluk platformu — moderasyon, rozet sistemi ve anonimlik seçeneğiyle.', tag: 'Topluluk' },
-  { icon: '🎓', name: 'DiyaAkademi', desc: 'Uzman onaylı eğitim videoları, canlı yayın etkinlikleri ve kişiselleştirilmiş öğrenme yolu.', tag: 'Eğitim' },
-  { icon: '🗺️', name: 'DiyaHarita', desc: 'Topluluk kaynaklı diyabet dostu mekan rehberi. DiyaLife Onaylı rozeti kazanan restoranlar, eczaneler, klinikler.', tag: 'Rehber' },
-];
+const translations = {
+  tr: {
+    nav_modules: "Modüller", nav_values: "Değerler", nav_phases: "Uygulama", nav_metrics: "Etki", nav_explore: "Keşfet",
+    hero_eyebrow: "DiyaLife Dijital Sağlık Ekosistemi",
+    hero_title: "Diyabeti<br><span class=\"italic\">yönet</span>, hayatı<br>yaşa.",
+    hero_sub: "DiyaLife; Tip 1 diyabetli gençlerin fiziksel, zihinsel ve sosyal sağlığını bütüncül bir perspektifle ele alan, teknoloji destekli ve akran öğrenimine dayalı yenilikçi bir diyabet yönetim ekosistemidir.",
+    hero_btn_explore: "Ekosistemi Keşfet", hero_btn_values: "Özgün Değer",
+    stat_1: "Entegre modül ve alt sistem", stat_2: "Hedeflenen psikolojik iyilik artışı",
+    stat_3: "Hipoglisemi sıklığı azalma hedefi", stat_4: "Pilot uygulama şehri — İstanbul, Ankara, İzmir",
+    mod_eyebrow: "Ekosistem", mod_title: "12 bileşen,<br>tek bir ekosistem.",
+    mod_sub: "Fiziksel sağlık, zihinsel destek ve sosyal bağlantı — her boyut tek bir çatı altında, birbirini tamamlayan modüller halinde tasarlandı.",
+    feat1_eyebrow: "DiyaAsistan", feat1_title: "Ulusal kılavuza dayalı yapay zeka asistanı.",
+    feat1_sub: "Türkiye Endokrinoloji ve Metabolizma Derneği'nin klinik kılavuzu temel alınarak geliştirilen RAG mimarisine dayalı DiyaAsistan, her soruyu kaynak gösterimiyle yanıtlar. Tanı koymaz — yol gösterir.",
+    feat1_l1: "Kanıta dayalı, kaynak atıflı yanıtlar", feat1_l2: "Acil semptomlarda HypoGuard ile entegre çalışır", feat1_l3: "Kılavuz güncellemelerinde otomatik bilgi tabanı revizyonu",
+    feat1_card1: "Asistan Yanıtı", feat1_q1: "Sen sordun:", feat1_q2: "\"Egzersiz öncesi insülin dozumu nasıl ayarlamalıyım?\"",
+    feat1_ans1: "Egzersiz süresi ve yoğunluğuna göre bazal insülini %20–50 azaltmanız önerilebilir. Orta yoğunluklu aktivite öncesi kan şekeriniz 120 mg/dL'nin üzerindeyse ek karbonhidrat gerekmeyebilir...",
+    feat1_src: "📎 Kaynak: TEMD Diyabet Kılavuzu 2024, Bölüm 7.3", feat1_badge: "✓ Kılavuz Onaylı",
+    feat2_eyebrow: "Ölçülebilir Etki", feat2_title: "Her hedef,<br>somut bir çıktı.",
+    feat2_sub: "DiyaLife'ın başarısı soyut değil — HbA1c değerinden okul devamsızlığına, psikolojik iyilik puanından kullanıcı memnuniyetine kadar her gösterge net hedeflerle tanımlanmıştır.",
+    feat2_card1: "Başarı Göstergeleri", feat2_b1: "HbA1c İyileşme", feat2_b2: "Hipoglisemi Sıklığı", feat2_b3: "Psikolojik İyi Oluş", feat2_b4: "Kullanıcı Memnuniyeti",
+    val_e: "Özgün Değer", val_t: "Neden farklıyız?", val_s: "DiyaLife'ı sıradan bir sağlık uygulamasından ayıran beş temel tasarım ilkesi.",
+    pha_e: "Uygulama Planı", pha_t: "Adım adım,<br>tüm Türkiye'ye.",
+    pha_n1: "0–6. Ay", pha_n2: "6–12. Ay", pha_n3: "12. Ay +",
+    pha_i1: "Pilot Başlangıç", pha_i2: "Ölçeklendirme", pha_i3: "Ulusal Yaygınlaşma",
+    pha_p1: "5 pilot lisede okul entegrasyon programı başlatılır; mobil uygulamanın beta versiyonu yayımlanır. Hedef: 100 aktif kullanıcı. İstanbul, Ankara ve İzmir'den seçilen okullarla Türkiye Diyabet Vakfı iş birliği kurulur.",
+    pha_p2: "20 liseye genişleme, Aile ve Arkadaş Modülü'nün devreye alınması. DiyaForum ve DiyaAkademi tam kapasite çalışmaya başlar. Hedef: 500 aktif kullanıcı.",
+    pha_p3: "Tüm Türkiye'de erişim, Tip 2 diyabete model adaptasyonu, Sağlık Bakanlığı resmi programı statüsü. Uzun vadede WHO referans modeli hedefi.",
+    met_e: "Beklenen Çıktılar", met_t: "Üç düzeyde etki.",
+    quo_t: "\"Diyabet beni tanımlamaz;<br>ben diyabeti yönetirim.\"", quo_a: "Efe Deniz Akmansoy — DiyaLife Tasarımcısı",
+    foo_d: "DiyaLife — Diyabet yönetiminde bütüncül dijital destek platformu"
+  },
+  en: {
+    nav_modules: "Modules", nav_values: "Values", nav_phases: "Implementation", nav_metrics: "Impact", nav_explore: "Explore",
+    hero_eyebrow: "DiyaLife Digital Health Ecosystem",
+    hero_title: "Manage diabetes,<br><span class=\"italic\">live</span> life.",
+    hero_sub: "DiyaLife is an innovative diabetes management ecosystem driven by peer learning and tech support, which holistically addresses the physical, mental and social health of youth with Type 1 diabetes.",
+    hero_btn_explore: "Explore Ecosystem", hero_btn_values: "Core Values",
+    stat_1: "Integrated modules & subsystems", stat_2: "Target psychological well-being boost",
+    stat_3: "Target drop in hypoglycemia frequency", stat_4: "Pilot cities — Istanbul, Ankara, Izmir",
+    mod_eyebrow: "Ecosystem", mod_title: "12 components,<br>one ecosystem.",
+    mod_sub: "Physical health, mental support, and social connection — every dimension united under one roof as complementary modules.",
+    feat1_eyebrow: "DiyaAssistant", feat1_title: "AI assistant based on national guidelines.",
+    feat1_sub: "Developed via RAG architecture based on clinical guidelines of the Society of Endocrinology and Metabolism of Turkey, DiyaAssistant answers every question with source citations. It guides without diagnosing.",
+    feat1_l1: "Evidence-based, citation-supported answers", feat1_l2: "Integrates with HypoGuard during emergencies", feat1_l3: "Automatic knowledge base update on guideline revisions",
+    feat1_card1: "Assistant Reply", feat1_q1: "You asked:", feat1_q2: "\"How should I adjust my insulin dose before exercise?\"",
+    feat1_ans1: "Depending on exercise duration and intensity, a 20-50% reduction in basal insulin may be recommended. If your blood sugar is above 120 mg/dL before moderate-intensity activity, additional carbs might not be required...",
+    feat1_src: "📎 Source: TEMD Diabetes Guidelines 2024, Section 7.3", feat1_badge: "✓ Guideline Approved",
+    feat2_eyebrow: "Measurable Impact", feat2_title: "Every target,<br>a concrete outcome.",
+    feat2_sub: "DiyaLife's success is not abstract — from HbA1c levels to school absenteeism, and psychological well-being to user satisfaction, every indicator is defined with clear goals.",
+    feat2_card1: "Success Indicators", feat2_b1: "HbA1c Improvement", feat2_b2: "Hypoglycemia Freq.", feat2_b3: "Psychological Well-being", feat2_b4: "User Satisfaction",
+    val_e: "Core Value", val_t: "Why are we different?", val_s: "Five core design principles that distinguish DiyaLife from ordinary health applications.",
+    pha_e: "Implementation Plan", pha_t: "Step by step,<br>across Turkey.",
+    pha_n1: "Month 0–6", pha_n2: "Month 6–12", pha_n3: "Month 12+",
+    pha_i1: "Pilot Launch", pha_i2: "Scaling", pha_i3: "National Expansion",
+    pha_p1: "School integration program initiated in 5 pilot high schools; beta version of the mobile app released. Target: 100 active users. Collaboration with the Turkish Diabetes Foundation through selected schools.",
+    pha_p2: "Expansion to 20 high schools, deployment of Family and Friends Module. DiyaForum and DiyaAcademy become fully operational. Target: 500 active users.",
+    pha_p3: "Nationwide access, model adaptation for Type 2 diabetes, official Ministry of Health program status. Long-term goal of becoming a WHO reference model.",
+    met_e: "Expected Outcomes", met_t: "Impact on three levels.",
+    quo_t: "\"Diabetes doesn't define me;<br>I manage diabetes.\"", quo_a: "Efe Deniz Akmansoy",
+    foo_d: "DiyaLife — Holistic digital support platform for diabetes management"
+  }
+};
 
-const valuesData = [
-  { num: '01', title: 'Normalleştirme', text: 'Diyabeti "acınılacak bir durum" değil, başarıyla yönetilebilen bir yaşam biçimi olarak konumlandırır. Damgalanma kültürünü ortadan kaldırır.' },
-  { num: '02', title: 'Görünmez Destek', text: 'Aile ve arkadaşların "sürekli uyarma" yerine "fark edilmeyen ama her zaman hazır" bir destek sunmasını esas alır.' },
-  { num: '03', title: 'Sosyal Çekinceyi Kırma', text: 'Okulda insülin enjeksiyonu veya kan şekeri ölçümü sırasında yaşanan utancı kapsamlı farkındalık eğitimleriyle ele alır.' },
-  { num: '04', title: 'Akran Öğrenimi', text: 'Aynı tanıyı taşıyan gençlerin birbirinden öğrenmesini ve karşılıklı motivasyonu merkeze alır. Yalnızlık hissini azaltır.' },
-  { num: '05', title: 'Teknoloji Destekli Özerklik', text: 'Yapay zeka destekli araçlar ve kişiselleştirilmiş önerilerle gençlerin kendi sağlıklarını bağımsız yönetmesini destekler.' },
-];
+const i18nModules = {
+  tr: [
+    { icon: '📱', name: 'Mobil Uygulama', desc: 'iOS ve Android için ücretsiz uygulama — akıllı insülin hesaplayıcı, HypoGuard ve aile modülüyle dört temel alt sistem.', tag: 'Platform' },
+    { icon: '🚨', name: 'HypoGuard', desc: 'Kan şekeri düşme örüntülerini öğrenen erken uyarı sistemi. Konum paylaşımlı acil bildirim.', tag: 'Güvenlik' },
+    { icon: '🏫', name: 'Okul Entegrasyonu', desc: 'Öğretmen eğitimi, sınıf farkındalık programı ve kantin uyum sistemiyle okulda güvenli bir ortam.', tag: 'Eğitim' },
+    { icon: '🧠', name: 'Psikolojik Destek', desc: 'Duygu durum takibi ve 7/24 online danışmanlık hattıyla ruh sağlığı öncelikli yaklaşım.', tag: 'Sağlık' },
+    { icon: '🏃', name: 'DiyaFit', desc: 'Egzersiz sırasındaki kan şekeri dalgalanmalarını yöneten spor asistanı ve gamification sistemi.', tag: 'Aktif Yaşam' },
+    { icon: '🌙', name: 'SleepGuard', desc: 'Gece hipoglisemisi riskine karşı uyku güvenlik sistemi. Otomatik aile bildirimi.', tag: 'Gece Güvenliği' },
+    { icon: '🥗', name: 'Diyetisyen Köşesi', desc: 'Düşük glisemik indeksli Türk mutfağına uyarlanmış tarifler ve porsiyon eğitimi.', tag: 'Beslenme' },
+    { icon: '🧘', name: 'Mindfulness', desc: 'İnsülin enjeksiyonu öncesi nefes egzersizleri ve iğne fobisi protokolü.', tag: 'Zihin' },
+    { icon: '⌚', name: 'Giyilebilir Ent.', desc: 'Dexcom, FreeStyle Libre, Apple Watch vb. ile gerçek zamanlı veri senkronizasyonu.', tag: 'Teknoloji' },
+    { icon: '💬', name: 'DiyaForum', desc: 'Reddit esinli demokratik topluluk platformu — moderasyon ve rozet sistemiyle.', tag: 'Topluluk' },
+    { icon: '🎓', name: 'DiyaAkademi', desc: 'Uzman onaylı eğitim videoları, canlı yayın etkinlikleri ve kişiselleştirilmiş öğrenme yolu.', tag: 'Eğitim' },
+    { icon: '🗺️', name: 'DiyaHarita', desc: 'Topluluk kaynaklı diyabet dostu mekan rehberi.', tag: 'Rehber' },
+  ],
+  en: [
+    { icon: '📱', name: 'Mobile App', desc: 'Free app for iOS & Android — four core subsystems incl. smart insulin calc, HypoGuard, and family module.', tag: 'Platform' },
+    { icon: '🚨', name: 'HypoGuard', desc: 'Early warning system learning your unique blood sugar drop patterns. Emergency location alerts.', tag: 'Safety' },
+    { icon: '🏫', name: 'School Integration', desc: 'Creates a safe environment via teacher training, class awareness, and canteen compliance.', tag: 'Education' },
+    { icon: '🧠', name: 'Psychological Support', desc: 'Mental health-first approach with mood tracking and a 24/7 online counseling line.', tag: 'Health' },
+    { icon: '🏃', name: 'DiyaFit', desc: 'Sports assistant managing blood sugar fluctuations during exercise with gamification.', tag: 'Active Life' },
+    { icon: '🌙', name: 'SleepGuard', desc: 'Sleep safety system against nocturnal hypoglycemia. Automated family notifications.', tag: 'Night Safety' },
+    { icon: '🥗', name: 'Dietitian Corner', desc: 'Adapted low-glycemic Turkish recipes and gamified portion control training.', tag: 'Nutrition' },
+    { icon: '🧘', name: 'Mindfulness', desc: 'Pre-insulin breathing routines, needle phobia protocols, and stress education.', tag: 'Mind' },
+    { icon: '⌚', name: 'Wearable Sync', desc: 'Real-time data sync with Dexcom, Libre, Apple Watch, and other wearables.', tag: 'Technology' },
+    { icon: '💬', name: 'DiyaForum', desc: 'Reddit-inspired democratic community platform — featuring moderation & badges.', tag: 'Community' },
+    { icon: '🎓', name: 'DiyaAcademy', desc: 'Expert-approved educational videos, live broadcasts, and personalized learning paths.', tag: 'Education' },
+    { icon: '🗺️', name: 'DiyaMap', desc: 'Crowdsourced diabetes-friendly venue guide for clinics & restaurants.', tag: 'Guide' },
+  ]
+};
 
-const metricsData = [
-  { icon: '📉', val: '%0.5–1', label: 'HbA1c azalma hedefi' },
-  { icon: '⚡', val: '%30', label: 'Hipoglisemi sıklığı düşüşü' },
-  { icon: '🏫', val: '%40', label: 'Okul devamsızlığı azalması' },
-  { icon: '😊', val: '%50', label: 'Psikolojik iyilik artışı' },
-  { icon: '⭐', val: '4.5/5', label: 'Hedef kullanıcı memnuniyeti' },
-  { icon: '🌍', val: '81 il', label: 'Uzun vadeli kapsama hedefi' },
-];
+const i18nValues = {
+  tr: [
+    { num: '01', title: 'Normalleştirme', text: 'Diyabeti "acınılacak bir durum" değil, başarıyla yönetilebilen bir yaşam biçimi olarak konumlandırır.' },
+    { num: '02', title: 'Görünmez Destek', text: 'Aile ve arkadaşların "sürekli uyarma" yerine "fark edilmeyen hazır" bir destek sunmasını esas alır.' },
+    { num: '03', title: 'Sosyal Çekince', text: 'Okulda insülin enjeksiyonu veya şeker ölçümü sırasında yaşanan utancı eğitimlerle ele alır.' },
+    { num: '04', title: 'Akran Öğrenimi', text: 'Aynı tanıyı taşıyan gençlerin birbirinden öğrenmesini ve motivasyonunu merkeze alır.' },
+    { num: '05', title: 'Özerklik', text: 'Yapay zeka araçları ve kişiselleştirilmiş önerilerle gençlerin sağlıklarını bağımsız yönetmesini destekler.' },
+  ],
+  en: [
+    { num: '01', title: 'Normalization', text: 'Positions diabetes not as a "pitiable condition" but as a successfully manageable lifestyle.' },
+    { num: '02', title: 'Invisible Support', text: 'Based on family & friends offering "unnoticed but ready" support instead of "constant warnings".' },
+    { num: '03', title: 'Social Hesitation', text: 'Addresses the embarrassment experienced during insulin injections at school via awareness.' },
+    { num: '04', title: 'Peer Learning', text: 'Centers on mutual motivation and learning among peers with the same diagnosis.' },
+    { num: '05', title: 'Autonomy', text: 'Supports youth in independently managing their health with AI-powered tools and recommendations.' },
+  ]
+};
 
-// Render modules
-const mgrid = document.getElementById('modules-grid');
-modules.forEach((m, i) => {
-  const el = document.createElement('div');
-  el.className = 'mod-card reveal';
-  el.style.transitionDelay = (i * 0.05) + 's';
-  el.innerHTML = `<div class="mod-icon">${m.icon}</div><div class="mod-name">${m.name}</div><div class="mod-desc">${m.desc}</div><span class="mod-tag">${m.tag}</span>`;
-  mgrid.appendChild(el);
-  el.addEventListener('mousemove', e => {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-    el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+const i18nMetrics = {
+  tr: [
+    { icon: '📉', val: '%0.5–1', label: 'HbA1c azalma hedefi' }, { icon: '⚡', val: '%30', label: 'Hipoglisemi sıklığı düşüşü' },
+    { icon: '🏫', val: '%40', label: 'Okul devamsızlığı azalması' }, { icon: '😊', val: '%50', label: 'Psikolojik iyilik artışı' },
+    { icon: '⭐', val: '4.5/5', label: 'Hedef kullanıcı memnuniyeti' }, { icon: '🌍', val: '81 il', label: 'Uzun vadeli kapsama hedefi' }
+  ],
+  en: [
+    { icon: '📉', val: '0.5–1%', label: 'HbA1c reduction target' }, { icon: '⚡', val: '30%', label: 'Hypoglycemia frequency drop' },
+    { icon: '🏫', val: '40%', label: 'School absenteeism reduction' }, { icon: '😊', val: '50%', label: 'Psychological well-being rise' },
+    { icon: '⭐', val: '4.5/5', label: 'Target user satisfaction' }, { icon: '🌍', val: 'Nationwide', label: 'Long-term coverage limit' }
+  ]
+};
+
+let currentLang = 'tr';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  
+  // Set active class
+  document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  
+  // Update texts
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    let key = el.getAttribute('data-i18n');
+    if(translations[lang][key]) el.innerHTML = translations[lang][key];
   });
-});
+  
+  renderGrids();
+}
 
-// Render values
-const vgrid = document.getElementById('values-grid');
-valuesData.forEach((v, i) => {
-  const el = document.createElement('div');
-  el.className = 'val-card reveal';
-  el.style.transitionDelay = (i * 0.08) + 's';
-  el.innerHTML = `<div class="val-num">${v.num}</div><div class="val-title">${v.title}</div><div class="val-text">${v.text}</div>`;
-  vgrid.appendChild(el);
-});
+function renderGrids() {
+  const mgrid = document.getElementById('modules-grid');
+  mgrid.innerHTML = '';
+  i18nModules[currentLang].forEach((m, i) => {
+    const el = document.createElement('div');
+    el.className = 'mod-card reveal visible';
+    el.innerHTML = `<div class="mod-icon">${m.icon}</div><div class="mod-name">${m.name}</div><div class="mod-desc">${m.desc}</div><span class="mod-tag">${m.tag}</span>`;
+    mgrid.appendChild(el);
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
 
-// Render metrics
-const mgrid2 = document.getElementById('metrics-grid');
-metricsData.forEach((m, i) => {
-  const el = document.createElement('div');
-  el.className = 'metric-card reveal';
-  el.style.transitionDelay = (i * 0.07) + 's';
-  el.innerHTML = `<div class="metric-icon">${m.icon}</div><div class="metric-val">${m.val}</div><div class="metric-label">${m.label}</div>`;
-  mgrid2.appendChild(el);
-});
+  const vgrid = document.getElementById('values-grid');
+  vgrid.innerHTML = '';
+  i18nValues[currentLang].forEach((v, i) => {
+    const el = document.createElement('div');
+    el.className = 'val-card reveal visible';
+    el.innerHTML = `<div class="val-num">${v.num}</div><div class="val-title">${v.title}</div><div class="val-text">${v.text}</div>`;
+    vgrid.appendChild(el);
+  });
+
+  const mgrid2 = document.getElementById('metrics-grid');
+  mgrid2.innerHTML = '';
+  i18nMetrics[currentLang].forEach((m, i) => {
+    const el = document.createElement('div');
+    el.className = 'metric-card reveal visible';
+    el.innerHTML = `<div class="metric-icon">${m.icon}</div><div class="metric-val">${m.val}</div><div class="metric-label">${m.label}</div>`;
+    mgrid2.appendChild(el);
+  });
+}
+
+// Initial render
+setLang('tr');
 
 // Scroll reveal
 const obs = new IntersectionObserver(entries => {
@@ -917,7 +1047,7 @@ document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 const cursorDot = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');
 
-if (window.matchMedia("(pointer: fine)").matches) {
+if (window.matchMedia("(pointer: fine)").matches && cursorDot && cursorOutline) {
   window.addEventListener('mousemove', (e) => {
     cursorDot.style.left = e.clientX + 'px';
     cursorDot.style.top = e.clientY + 'px';
@@ -928,7 +1058,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
     }, { duration: 500, fill: 'forwards' });
   });
 
-  // Adding hover effect for clickable elements
   document.querySelectorAll('a, button, .mod-card, .val-card, .metric-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursorOutline.style.width = '60px';
